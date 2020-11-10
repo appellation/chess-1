@@ -14,6 +14,8 @@ use crate::movegen::*;
 use crate::piece::{Piece, ALL_PIECES, NUM_PIECES};
 use crate::square::{Square, ALL_SQUARES};
 use crate::zobrist::Zobrist;
+#[cfg(feature = "serde")]
+use serde::{Serialize, Deserialize};
 use std::convert::{TryFrom, TryInto};
 use std::fmt;
 use std::mem;
@@ -21,6 +23,8 @@ use std::str::FromStr;
 
 /// A representation of a chess board.  That's why you're here, right?
 #[derive(Copy, Clone, PartialEq, Debug)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "serde", serde(try_from = "&str", into = "String"))]
 pub struct Board {
     pieces: [BitBoard; NUM_PIECES],
     color_combined: [BitBoard; NUM_COLORS],
@@ -1099,6 +1103,20 @@ impl FromStr for Board {
 
     fn from_str(value: &str) -> Result<Self, Self::Err> {
         Ok(BoardBuilder::from_str(value)?.try_into()?)
+    }
+}
+
+impl <'a> TryFrom<&'a str> for Board {
+    type Error = Error;
+
+    fn try_from(value: &'a str) -> Result<Self, Self::Error> {
+        Ok(BoardBuilder::from_str(value)?.try_into()?)
+    }
+}
+
+impl From<Board> for String {
+    fn from(board: Board) -> Self {
+        board.to_string()
     }
 }
 

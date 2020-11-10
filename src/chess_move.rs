@@ -6,12 +6,17 @@ use crate::piece::Piece;
 use crate::rank::Rank;
 use crate::square::Square;
 
+#[cfg(feature = "serde")]
+use serde::{Serialize, Deserialize};
 use std::cmp::Ordering;
+use std::convert::TryFrom;
 use std::fmt;
 use std::str::FromStr;
 
 /// Represent a ChessMove in memory
 #[derive(Clone, Copy, Eq, PartialOrd, PartialEq, Default, Debug, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "serde", serde(try_from = "&str", into = "String"))]
 pub struct ChessMove {
     source: Square,
     dest: Square,
@@ -429,6 +434,20 @@ impl FromStr for ChessMove {
         }
 
         Ok(ChessMove::new(source, dest, promo))
+    }
+}
+
+impl <'a> TryFrom<&'a str> for ChessMove {
+    type Error = Error;
+
+    fn try_from(value: &'a str) -> Result<Self, Self::Error> {
+        value.parse()
+    }
+}
+
+impl From<ChessMove> for String {
+    fn from(value: ChessMove) -> Self {
+        value.to_string()
     }
 }
 

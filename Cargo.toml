@@ -17,13 +17,14 @@ documentation = "https://jordanbray.github.io/chess/chess/index.html"
 arrayvec = "0.5.1"
 nodrop = "0.1.14"
 failure = "0.1.6"
+serde = { version = "1.0", optional = true, features = ["derive"] }
 
 [profile.release]
 opt-level = 3
 debug = false
 
 [profile.dev]
-opt-level = 3
+opt-level = 0
 debug = true
 
 [profile.test]

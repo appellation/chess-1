@@ -4,6 +4,8 @@ use crate::color::Color;
 use crate::error::Error;
 use crate::movegen::MoveGen;
 use crate::piece::Piece;
+#[cfg(feature = "serde")]
+use serde::{Serialize, Deserialize};
 use std::str::FromStr;
 
 /// Contains all actions supported within the game
@@ -18,6 +20,7 @@ pub enum Action {
 
 /// What was the result of this game?
 #[derive(Copy, Clone, PartialEq, PartialOrd, Eq, Ord, Debug, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum GameResult {
     WhiteCheckmates,
     WhiteResigns,
