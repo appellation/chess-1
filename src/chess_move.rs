@@ -7,7 +7,7 @@ use crate::rank::Rank;
 use crate::square::Square;
 
 #[cfg(feature = "serde")]
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::convert::TryFrom;
 use std::fmt;
@@ -437,7 +437,7 @@ impl FromStr for ChessMove {
     }
 }
 
-impl <'a> TryFrom<&'a str> for ChessMove {
+impl<'a> TryFrom<&'a str> for ChessMove {
     type Error = Error;
 
     fn try_from(value: &'a str) -> Result<Self, Self::Error> {

@@ -5,7 +5,7 @@ use crate::error::Error;
 use crate::movegen::MoveGen;
 use crate::piece::Piece;
 #[cfg(feature = "serde")]
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use std::convert::TryFrom;
 use std::str::FromStr;
 #[cfg(feature = "strum")]
@@ -436,7 +436,7 @@ impl FromStr for Game {
     }
 }
 
-impl <'a> TryFrom<&'a str> for Game {
+impl<'a> TryFrom<&'a str> for Game {
     type Error = Error;
 
     fn try_from(value: &'a str) -> Result<Self, Self::Error> {

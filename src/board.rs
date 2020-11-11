@@ -15,7 +15,7 @@ use crate::piece::{Piece, ALL_PIECES, NUM_PIECES};
 use crate::square::{Square, ALL_SQUARES};
 use crate::zobrist::Zobrist;
 #[cfg(feature = "serde")]
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use std::convert::{TryFrom, TryInto};
 use std::fmt;
 use std::mem;
@@ -1106,7 +1106,7 @@ impl FromStr for Board {
     }
 }
 
-impl <'a> TryFrom<&'a str> for Board {
+impl<'a> TryFrom<&'a str> for Board {
     type Error = Error;
 
     fn try_from(value: &'a str) -> Result<Self, Self::Error> {
