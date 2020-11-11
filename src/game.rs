@@ -6,6 +6,7 @@ use crate::movegen::MoveGen;
 use crate::piece::Piece;
 #[cfg(feature = "serde")]
 use serde::{Serialize, Deserialize};
+use std::convert::TryFrom;
 use std::str::FromStr;
 
 /// Contains all actions supported within the game
@@ -37,6 +38,8 @@ pub enum GameResult {
 /// This structure is slow compared to using `Board` directly, so it is
 /// not recommended for engines.
 #[derive(Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "serde", serde(try_from = "&str", into = "String"))]
 pub struct Game {
     start_pos: Board,
     moves: Vec<Action>,
@@ -427,6 +430,20 @@ impl FromStr for Game {
 
     fn from_str(fen: &str) -> Result<Self, Self::Err> {
         Ok(Game::new_with_board(Board::from_str(fen)?))
+    }
+}
+
+impl <'a> TryFrom<&'a str> for Game {
+    type Error = Error;
+
+    fn try_from(value: &'a str) -> Result<Self, Self::Error> {
+        value.parse()
+    }
+}
+
+impl From<Game> for String {
+    fn from(game: Game) -> Self {
+        game.current_position().to_string()
     }
 }
 
