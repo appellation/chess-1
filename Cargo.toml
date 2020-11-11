@@ -18,6 +18,7 @@ arrayvec = "0.5.1"
 nodrop = "0.1.14"
 failure = "0.1.6"
 serde = { version = "1.0", optional = true, features = ["derive"] }
+strum = { version = "0.19", optional = true, features = ["derive"] }
 
 [profile.release]
 opt-level = 3

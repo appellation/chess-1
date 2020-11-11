@@ -8,6 +8,8 @@ use crate::piece::Piece;
 use serde::{Serialize, Deserialize};
 use std::convert::TryFrom;
 use std::str::FromStr;
+#[cfg(feature = "strum")]
+use strum::{AsRefStr, IntoStaticStr, ToString};
 
 /// Contains all actions supported within the game
 #[derive(Copy, Clone, PartialEq, PartialOrd, Debug, Eq)]
@@ -22,6 +24,7 @@ pub enum Action {
 /// What was the result of this game?
 #[derive(Copy, Clone, PartialEq, PartialOrd, Eq, Ord, Debug, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "strum", derive(AsRefStr, IntoStaticStr, ToString))]
 pub enum GameResult {
     WhiteCheckmates,
     WhiteResigns,
