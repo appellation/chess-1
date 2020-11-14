@@ -1,8 +1,14 @@
 use crate::rank::Rank;
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
 use std::ops::Not;
+#[cfg(feature = "strum")]
+use strum::{AsRefStr, IntoStaticStr, ToString, EnumString};
 
 /// Represent a color.
 #[derive(PartialOrd, PartialEq, Eq, Copy, Clone, Debug, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "strum", derive(AsRefStr, IntoStaticStr, ToString, EnumString))]
 pub enum Color {
     White,
     Black,
