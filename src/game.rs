@@ -9,7 +9,7 @@ use serde::{Deserialize, Serialize};
 use std::convert::TryFrom;
 use std::str::FromStr;
 #[cfg(feature = "strum")]
-use strum::{AsRefStr, IntoStaticStr, ToString};
+use strum::{AsRefStr, IntoStaticStr, ToString, EnumString};
 
 /// Contains all actions supported within the game
 #[derive(Copy, Clone, PartialEq, PartialOrd, Debug, Eq)]
@@ -24,7 +24,7 @@ pub enum Action {
 /// What was the result of this game?
 #[derive(Copy, Clone, PartialEq, PartialOrd, Eq, Ord, Debug, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-#[cfg_attr(feature = "strum", derive(AsRefStr, IntoStaticStr, ToString))]
+#[cfg_attr(feature = "strum", derive(AsRefStr, IntoStaticStr, ToString, EnumString))]
 pub enum GameResult {
     WhiteCheckmates,
     WhiteResigns,
