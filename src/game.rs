@@ -13,6 +13,8 @@ use strum::{AsRefStr, IntoStaticStr, ToString, EnumString};
 
 /// Contains all actions supported within the game
 #[derive(Copy, Clone, PartialEq, PartialOrd, Debug, Eq)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "serde", serde(tag = "action", content = "data"))]
 pub enum Action {
     MakeMove(ChessMove),
     OfferDraw(Color),
